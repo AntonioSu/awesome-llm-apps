@@ -8,6 +8,15 @@ from phi.model.openai import OpenAIChat
 import argparse
 import os
 
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("app.log", encoding="utf-8"),
+        logging.StreamHandler(),
+    ],
+)
 # 尝试从 Streamlit secrets 读取 API 密钥，如果没有则从环境变量读取
 try:
     api_key = st.secrets["api_keys"]["API_KEY"]
@@ -21,15 +30,7 @@ except (KeyError, FileNotFoundError):
         )
     else:
         logging.info(f"已从环境变量加载API密钥")
-# 配置日志
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("app.log", encoding="utf-8"),
-        logging.StreamHandler(),
-    ],
-)
+
 st.set_page_config(
     page_title="AI 健康与健身规划器",
     page_icon="🏋️‍♂️",
