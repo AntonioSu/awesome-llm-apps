@@ -350,10 +350,10 @@ def main():
 
     with col1:
         age = st.number_input(
-            "年龄", min_value=25, max_value=100, step=1, help="输入您的年龄"
+            "年龄", min_value=18, max_value=100, step=1, help="输入您的年龄"
         )
         height = st.number_input(
-            "身高 (cm)", min_value=165.0, max_value=250.0, step=0.1
+            "身高 (cm)", min_value=150.0, max_value=250.0, step=0.1
         )
         activity_level = st.selectbox(
             "活动水平",
@@ -367,7 +367,7 @@ def main():
         )
 
     with col2:
-        weight = st.number_input("体重 (kg)", min_value=50.0, max_value=300.0, step=0.1)
+        weight = st.number_input("体重 (kg)", min_value=30.0, max_value=300.0, step=0.1)
         sex = st.selectbox("性别", options=["女性", "男性", "其他"])
         fitness_goals = st.selectbox(
             "健身目标",
