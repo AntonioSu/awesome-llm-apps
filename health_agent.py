@@ -6,7 +6,9 @@ from phi.agent import Agent
 from phi.model.google import Gemini
 from phi.model.openai import OpenAIChat
 import argparse
+import os
 
+api_key = os.getenv("API_KEY", "EMPTY")
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,
@@ -131,7 +133,7 @@ def display_sidebar():
                 st.markdown(
                     "[在此处获取您的 API 密钥](https://aistudio.google.com/apikey)"
                 )
-                return
+                return None, None, None, None
 
         elif model_provider == "OpenAI":
             st.subheader("🤖 OpenAI 配置")
@@ -163,7 +165,7 @@ def display_sidebar():
                 st.markdown(
                     "[在此处获取您的 API 密钥](https://platform.openai.com/api-keys)"
                 )
-                return
+                return None, None, None, None
 
         st.success(f"✅ {model_provider} 配置完成！")
     return model_provider, model_name, base_url, api_key
@@ -231,25 +233,26 @@ def main():
         model_provider = "Gemini"
         model_name = args.model_name
         base_url = args.base_url
-        api_key = args.api_key
+        # Use the global api_key from environment variable
+        api_key_to_use = api_key
     else:
-        model_provider, model_name, base_url, api_key = display_sidebar()
+        model_provider, model_name, base_url, api_key_to_use = display_sidebar()
     logging.info(f"model_provider: {model_provider}")
     logging.info(f"model_name: {model_name}")
     logging.info(f"base_url: {base_url}")
-    logging.info(f"api_key: {api_key}")
+    logging.info(f"api_key: {api_key_to_use}")
     # 初始化选定的模型
     model = None
     try:
         if model_provider == "Gemini":
             logging.info(f"开始初始化 Gemini 模型: {model_name}")
-            model = Gemini(id=model_name, api_key=api_key)
+            model = Gemini(id=model_name, api_key=api_key_to_use)
             logging.info("Gemini 模型初始化成功")
         elif model_provider == "OpenAI":
             logging.info(f"开始初始化 OpenAI 兼容模型")
             logging.info(f"模型名称: {model_name}")
             logging.info(f"Base URL: {base_url}")
-            logging.info(f"API Key 前缀: {api_key[:10]}...")
+            logging.info(f"API Key 前缀: {api_key_to_use[:10]}...")
 
             st.info(f"正在初始化 OpenAI 兼容模型: {model_name}")
             st.info(f"使用 Base URL: {base_url}")
@@ -262,7 +265,7 @@ def main():
             # 使用标准 OpenAIChat（兼容性修复已通过 deepseek_fix 模块自动应用）
             model = OpenAIChat(
                 id=model_name,
-                api_key=api_key,
+                api_key=api_key_to_use,
                 base_url=clean_base_url,
                 max_tokens=2000,
                 temperature=0.7,
