@@ -357,12 +357,12 @@ def main():
         )
         activity_level = st.selectbox(
             "活动水平",
-            options=["久坐", "轻度活跃", "中度活跃", "非常活跃", "极度活跃"],
+            options=["久坐", "轻度活跃", "中度活跃", "非常活跃", "极度活跃", "不运动"],
             help="选择您通常的活动水平",
         )
         dietary_preferences = st.selectbox(
             "饮食偏好",
-            options=["素食", "生酮", "无麸质", "低碳水", "无乳制品"],
+            options=["素食", "荤素搭配", "生酮", "无麸质", "低碳水", "无乳制品"],
             help="选择您的饮食偏好",
         )
 
@@ -371,7 +371,7 @@ def main():
         sex = st.selectbox("性别", options=["女性", "男性", "其他"])
         fitness_goals = st.selectbox(
             "健身目标",
-            options=["减肥", "增肌", "耐力", "保持健康", "力量训练"],
+            options=["减肥", "增肌", "耐力", "保持健康", "力量训练", "塑形"],
             help="您想实现什么目标？",
         )
 
