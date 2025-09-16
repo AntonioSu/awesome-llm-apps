@@ -8,11 +8,19 @@ from phi.model.openai import OpenAIChat
 import argparse
 import os
 
-api_key = os.getenv("API_KEY")
-if not api_key:
-    st.error("请先设置OPENAI_API_KEY环境变量！")
-else:
-    st.success(f"已加载API密钥：")  # 隐藏部分字符
+# 尝试从 Streamlit secrets 读取 API 密钥，如果没有则从环境变量读取
+try:
+    api_key = st.secrets["api_keys"]["API_KEY"]
+    logging.info(f"已成功从 secrets.toml 加载API密钥")
+except (KeyError, FileNotFoundError):
+    # 如果 secrets.toml 中没有，则尝试从环境变量读取
+    api_key = os.getenv("API_KEY") or os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        logging.error(
+            "请在 secrets.toml 中设置 API_KEY 或设置环境变量 API_KEY/OPENAI_API_KEY！"
+        )
+    else:
+        logging.info(f"已从环境变量加载API密钥")
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,
