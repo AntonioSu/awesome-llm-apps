@@ -464,7 +464,7 @@ def main():
 
                 display_dietary_plan(dietary_plan)
                 display_fitness_plan(fitness_plan)
-
+                logging.info("计划生成成功，已保存到会话状态")
             except Exception as e:
                 error_msg = str(e)
                 error_traceback = traceback.format_exc()
