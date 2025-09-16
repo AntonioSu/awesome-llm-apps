@@ -403,7 +403,7 @@ def main():
                     - 确保计划具有可操作性和详细性
                     请用中文回复。""",
                 )
-
+                logging.info(f"++++++++")
                 user_profile = f"""
                 年龄: {age}
                 体重: {weight}kg
@@ -413,7 +413,9 @@ def main():
                 饮食偏好: {dietary_preferences}
                 健身目标: {fitness_goals}
                 """
-                logging.info(f"++++user_profile++++: {user_profile}")
+                logging.info(f"user_profile: {user_profile}")
+                logging.info(f"++++++++")
+
 
                 # 生成饮食计划
                 st.info("🍽️ 正在生成个性化饮食计划...")
