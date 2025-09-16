@@ -8,7 +8,11 @@ from phi.model.openai import OpenAIChat
 import argparse
 import os
 
-api_key = os.getenv("API_KEY", "EMPTY")
+api_key = os.getenv("API_KEY")
+if not api_key:
+    st.error("请先设置OPENAI_API_KEY环境变量！")
+else:
+    st.success(f"已加载API密钥：")  # 隐藏部分字符
 # 配置日志
 logging.basicConfig(
     level=logging.INFO,
